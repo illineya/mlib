@@ -1,0 +1,11 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+pkgincludedir=${includedir}/mlib
+
+Name: mlib
+Description: Mlib
+Version: 1.0
+Libs: -L${libdir} -lmlib
+Cflags: -I${pkgincludedir}

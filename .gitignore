@@ -12,3 +12,9 @@ tests/CMakeFiles/
 tests/CTestTestfile.cmake
 tests/Makefile
 tests/cmake_install.cmake
+.cmake/
+build.ninja
+install_manifest.txt
+libmlib.so
+mlib.pc
+tests/mlist
