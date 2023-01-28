@@ -1,14 +1,14 @@
-#ifndef __MQUEUE_H__
-#define __MQUEUE_H__
+#ifndef __MSTACK_H__
+#define __MSTACK_H__
 
 #if !defined (__MLIB_H_INSIDE__)
 #error "Only <mlib.h> can be included directly."
 #endif
 #include <mlib.h>
 
-typedef struct MQueue MQueue_t;
+typedef struct MStack MStack_t;
 
-struct MQueue {
+struct MStack {
     MList_t *head;
     MList_t *tail;
     muint32_t count;
@@ -17,31 +17,31 @@ struct MQueue {
 /**
  * Создаёт новую очередь
  *
- * @return MQueue_t *
+ * @return MStack_t *
  */
-MQueue_t *mqueue_init();
+MStack_t *mstack_init();
 
 /**
  * Добавляет элемент в очередь
  *
- * @param queue MQueue_t *
+ * @param stack MStack_t *
  * @param data mpointer_t
  */
-void mqueue_push(MQueue_t *queue, mpointer_t data);
+void mstack_push(MStack_t *stack, mpointer_t data);
 
 /**
  * Удаляет элемент из очереди и возвращает значение
  *
- * @param queue MQueue_t *
+ * @param stack MStack_t *
  * @return mpointer_r
  */
-mpointer_t mqueue_pool(MQueue_t *queue);
+mpointer_t mstack_pool(MStack_t *stack);
 
 /**
  * Очищает всю память занимаемую очередью
  *
- * @param queue MQueue_t *
+ * @param stack MStack_t *
  */
-void mqueue_deinit(MQueue_t *queue);
+void mstack_deinit(MStack_t *stack);
 
 #endif

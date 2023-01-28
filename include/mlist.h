@@ -12,7 +12,8 @@ struct MList {
     mpointer_t data;
 };
 
-typedef void (* MListForeach)(mpointer_t data);
+typedef void (* MListForeachFunc)(mpointer_t data);
+typedef int (* MListSortFunc)(mpointer_t a, mpointer_t b);
 
 /**
  * Получает первый элемент из списка
@@ -23,13 +24,40 @@ typedef void (* MListForeach)(mpointer_t data);
 MList_t *mlist_first(MList_t *list);
 
 /**
- * Кладёт новый элемент в список
+ * Получает последний элемент из списка
+ *
+ * @param list MList_t *
+ * @return MLis_t *
+ */
+MList_t *mlist_last(MList_t *list);
+
+/**
+ * Кладёт новый элемент в конец списка
  *
  * @param list MLis_t *
  * @param data mpointer_t
  * @return MLis_t *
  */
 MList_t *mlist_append(MList_t *list, mpointer_t data);
+
+/**
+ * Кладёт новый элемент в начало списка
+ *
+ * @param list MLis_t *
+ * @param data mpointer_t
+ * @return MLis_t *
+ */
+MList_t *mlist_prepend(MList_t *list, mpointer_t data);
+
+/**
+ * Кладёт новый элемент в список, в позицию определённую функцией MListSortFunc
+ *
+ * @param list MLis_t *
+ * @param a mpointer_t
+ * @param b mpointer_t
+ * @return MLis_t *
+ */
+MList_t *mlist_insert_sorted(MList_t *list, mpointer_t data, MListSortFunc func);
 
 /**
  * Удаляет элемент из списка
@@ -48,6 +76,14 @@ MList_t *mlist_remove(MList_t *list, mconstpointer_t data);
 void mlist_remove_all(MList_t *list);
 
 /**
+ * Возвращает кол-во элементов в списке
+ *
+ * @param list MList_t *
+ * @return muint32_t
+ */
+muint32_t mlist_length(MList_t *list);
+
+/**
  * Ищет элемент в списке
  *
  * @param list MLis_t *
@@ -62,6 +98,6 @@ MList_t *mlist_find(MList_t *list, mconstpointer_t data);
  * @param list MLis_t *
  * @param func MListForeach
  */
-void mlist_foreach(MList_t *list, MListForeach func);
+void mlist_foreach(MList_t *list, MListForeachFunc func);
 
 #endif

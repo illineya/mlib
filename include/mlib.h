@@ -6,9 +6,10 @@
 #include <mtypes.h>
 #include <mpool.h>
 #include <mlog.h>
+#include <mlist.h>
 #include <mqueue.h>
+#include <mstack.h>
 #include <mset.h>
 #include <mmap.h>
-#include <mlist.h>
 
 #endif
