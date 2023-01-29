@@ -14,7 +14,7 @@ void mstack_push(MStack_t *stack, mpointer_t data) {
 
 mpointer_t mstack_pool(MStack_t *stack) {
     mpointer_t item = stack->tail->data;
-    mlist_remove(stack->head, stack->tail->data);
+    stack->tail = mlist_remove(stack->tail, stack->tail->data);
     stack->count--;
     return item;
 }

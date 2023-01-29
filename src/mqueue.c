@@ -14,7 +14,7 @@ void mqueue_push(MQueue_t *queue, mpointer_t data) {
 
 mpointer_t mqueue_pool(MQueue_t *queue) {
     mpointer_t item = queue->head->data;
-    mlist_remove(queue->head, queue->head->data);
+    queue->head = mlist_remove(queue->head, queue->head->data);
     queue->count--;
     return item;
 }

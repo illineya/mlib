@@ -1,13 +1,14 @@
 #include <mlib.h>
 
 MPool_t *mpool_create(muint64_t size, int count) {
-    MPool_t *p = (MPool_t *) calloc(1, sizeof(MPool_t));
+    MPool_t *p = (MPool_t *) malloc(sizeof(MPool_t));
 	
 	if(p) {
 		p->pool = malloc(size * count);
 		p->in = calloc(1, count);
 		p->size = size;
 		p->count = count;
+        pthread_mutex_init(&p->mutex, NULL);
 		return p;
 	}
 
@@ -62,6 +63,7 @@ void mpool_free_mt(MPool_t *p, mconstpointer_t d) {
 void mpool_destroy(MPool_t *p) {
 	if(p) {
 		free(p->pool);
+        pthread_mutex_destroy(&p->mutex);
 		free(p);
 	}
 }

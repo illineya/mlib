@@ -125,10 +125,11 @@ MList_t *mlist_find(MList_t *list, mconstpointer_t data) {
     return list;
 }
 
-void mlist_foreach(MList_t *list, MListForeachFunc func) {
+void mlist_foreach(MList_t *list, MListForeachFunc func, mpointer_t udata) {
     list = mlist_first(list);
     while(list) {
-        func(list->data);
+        if(!func(list->data, udata))
+            break;
         list = list->next;
     }
 }

@@ -12,7 +12,7 @@ struct MList {
     mpointer_t data;
 };
 
-typedef void (* MListForeachFunc)(mpointer_t data);
+typedef mboolean (* MListForeachFunc)(mpointer_t data, mpointer_t udata);
 typedef int (* MListSortFunc)(mpointer_t a, mpointer_t b);
 
 /**
@@ -98,6 +98,6 @@ MList_t *mlist_find(MList_t *list, mconstpointer_t data);
  * @param list MLis_t *
  * @param func MListForeach
  */
-void mlist_foreach(MList_t *list, MListForeachFunc func);
+void mlist_foreach(MList_t *list, MListForeachFunc func, mpointer_t udata);
 
 #endif
