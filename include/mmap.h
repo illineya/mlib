@@ -4,17 +4,17 @@
 #if !defined (__MLIB_H_INSIDE__)
 #error "Only <mlib.h> can be included directly."
 #endif
+#define CAPACITY 16
 
-typedef muint8_t (* MHashFunc)(mpointer_t key);
-typedef mboolean (* MEqualFunc)(mpointer_t key, mpointer_t value);
+typedef muint32_t (* MHashFunc)(mconstpointer_t key);
+typedef mboolean (* MEqualFunc)(mconstpointer_t key, mconstpointer_t value);
 
 typedef struct MMap MMap_t;
 struct MMap {
-    muint8_t capacity;
     muint32_t length;
     MHashFunc hash;
     MEqualFunc equal;
-    MList_t *bucket[];
+    MList_t *bucket[16];
 };
 
 /**
@@ -28,7 +28,7 @@ struct MMap {
  * @param equal MEqual_t
  * @return MMap_t *
  */
-MMap_t *mmap_init(muint8_t capacity, MHashFunc hash, MEqualFunc equal);
+MMap_t *mmap_init(MHashFunc hash, MEqualFunc equal);
 
 /**
  * Очищает всю выделенную память для MMap_t

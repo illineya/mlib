@@ -5,7 +5,7 @@
 #error "Only <mlib.h> can be included directly."
 #endif
 
-muint32_t mstr_hash(const char *str);
-mboolean mstr_equal(const char *, const char *);
+muint32_t mstr_hash(mconstpointer_t);
+mboolean mstr_equal(mconstpointer_t, mconstpointer_t);
 
 #endif

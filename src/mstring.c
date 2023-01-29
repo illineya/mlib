@@ -1,7 +1,7 @@
 #include <mlib.h>
 #include <string.h>
 
-muint32_t mstr_hash(const char *str) {
+muint32_t mstr_hash(mconstpointer_t str) {
     muint32_t hash = 0;
 
     if(str)
@@ -11,7 +11,7 @@ muint32_t mstr_hash(const char *str) {
     return hash;
 }
 
-mboolean mstr_equal(const char *a, const char *b) {
+mboolean mstr_equal(mconstpointer_t a, mconstpointer_t b) {
     if(!a && !b) return TRUE;
     if(!a || !b) return FALSE;
 
