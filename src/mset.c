@@ -16,7 +16,7 @@ void mset_deinit(MSet_t *set) {
 void mset_add(MSet_t *set, mpointer_t data) {
     if(set) {
         if(!mmap_contains(set->map, data)) {
-            mmap_add(set->map, data, data);
+            mmap_add(set->map, data, NULL);
         }
     }
 }

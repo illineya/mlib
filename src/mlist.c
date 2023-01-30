@@ -86,6 +86,7 @@ MList_t *mlist_remove(MList_t *list, mconstpointer_t data) {
     if(list) {
         MList_t *next = list->next;
         MList_t *prev = list->prev;
+        free(list->data);
         free(list);
 
         if(next) next->prev = prev;
@@ -104,6 +105,7 @@ void mlist_remove_all(MList_t *list) {
     while(list) {
         MList_t *item = list;
         list = list->next;
+        free(item->data);
         free(item);
     }
 }

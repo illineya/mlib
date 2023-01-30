@@ -18,3 +18,4 @@ install_manifest.txt
 libmlib.so
 mlib.pc
 tests/mlist
+dev/
