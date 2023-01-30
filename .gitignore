@@ -19,3 +19,8 @@ libmlib.so
 mlib.pc
 tests/mlist
 dev/
+tests/mmap
+tests/mpool
+tests/mqueue
+tests/mset
+tests/mstack
