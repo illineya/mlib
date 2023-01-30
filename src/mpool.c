@@ -72,6 +72,7 @@ void mpool_free_mt(MPool_t *p, mconstpointer_t d) {
 
 void mpool_deinit(MPool_t *p) {
 	if(p) {
+        free(p->in);
 		free(p->pool);
         pthread_mutex_destroy(&p->mutex);
 		free(p);
