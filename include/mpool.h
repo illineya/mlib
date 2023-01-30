@@ -26,7 +26,7 @@ struct MPool {
  * @param int count
  * @return mpool_t *
  */
-MPool_t *mpool_create(muint64_t size, int count);
+MPool_t *mpool_init(muint64_t size, int count);
 
 /**
  * Выделяет обдасть памяти из pool
@@ -44,6 +44,14 @@ mpointer_t mpool_alloc(MPool_t *p);
  * @return mpointer_t
  */
 void mpool_free(MPool_t *p, mconstpointer_t d);
+
+/**
+ * возвращает кол-во использованной памяти
+ *
+ * @param p MPool_t *
+ * @return muint32_t
+ */
+muint32_t mpool_allocated(MPool_t *p);
 
 /**
  * Выделяет обдасть памяти из pool
@@ -69,6 +77,6 @@ void mpool_free_mt(MPool_t *p, mconstpointer_t d);
  * 
  * @param p mpool_t *
  */
-void mpool_destroy(MPool_t *p);
+void mpool_deinit(MPool_t *p);
 
 #endif

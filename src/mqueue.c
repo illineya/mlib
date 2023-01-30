@@ -1,27 +1,32 @@
 #include <mlib.h>
+#include <stdio.h>
 
-MQueue_t *mqueue_init() {
-    return (MQueue_t *) calloc(1, sizeof(MQueue_t));
+MQueue_t *mqueue_init(void) {
+    MQueue_t *queue = (MQueue_t *) calloc(1, sizeof(MQueue_t));
+    queue->list = NULL;
+    return queue;
 }
 
 void mqueue_push(MQueue_t *queue, mpointer_t data) {
-    MList_t *current = mlist_append(queue->head, data);
-    if(!queue->head)
-        queue->head = current;
-    queue->tail = current;
+    queue->list = mlist_append(queue->list, data);
     queue->count++;
 }
 
-mpointer_t mqueue_pool(MQueue_t *queue) {
-    mpointer_t item = queue->head->data;
-    queue->head = mlist_remove(queue->head, queue->head->data);
-    queue->count--;
-    return item;
+mpointer_t mqueue_pop(MQueue_t *queue) {
+    if(queue && queue->list) {
+        queue->list = mlist_first(queue->list);
+        mpointer_t item = queue->list->data;
+        queue->list = mlist_remove(queue->list, item);
+        queue->count--;
+
+        return item;
+    }
+    return NULL;
 }
 
 void mqueue_deinit(MQueue_t *queue) {
     if(queue) {
-        mlist_remove_all(queue->head);
+        mlist_remove_all(queue->list);
         free(queue);
     }
 }

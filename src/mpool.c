@@ -1,6 +1,7 @@
 #include <mlib.h>
+#include <stdlib.h>
 
-MPool_t *mpool_create(muint64_t size, int count) {
+MPool_t *mpool_init(muint64_t size, int count) {
     MPool_t *p = (MPool_t *) malloc(sizeof(MPool_t));
 	
 	if(p) {
@@ -36,6 +37,15 @@ void mpool_free(MPool_t *p, mconstpointer_t d) {
 	}
 }
 
+muint32_t mpool_allocated(MPool_t *p) {
+    muint32_t size = 0;
+    for(int i=0; i<p->count; i++) {
+        if(p->in[i])
+            size += p->size;
+    }
+    return size;
+}
+
 mpointer_t mpool_alloc_mt(MPool_t *p) {
 	mpointer_t d = NULL;
 	pthread_mutex_lock(&p->mutex);
@@ -60,7 +70,7 @@ void mpool_free_mt(MPool_t *p, mconstpointer_t d) {
 	pthread_mutex_unlock(&p->mutex);
 }
 
-void mpool_destroy(MPool_t *p) {
+void mpool_deinit(MPool_t *p) {
 	if(p) {
 		free(p->pool);
         pthread_mutex_destroy(&p->mutex);

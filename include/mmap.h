@@ -6,9 +6,6 @@
 #endif
 #define CAPACITY 16
 
-typedef muint32_t (* MHashFunc)(mconstpointer_t key);
-typedef mboolean (* MEqualFunc)(mconstpointer_t key, mconstpointer_t value);
-
 typedef struct MMap MMap_t;
 struct MMap {
     muint32_t length;
@@ -88,6 +85,6 @@ muint32_t mmap_length(MMap_t *map);
  * @param map MMap_t *
  * @param func MMapForeach
  */
-void mmap_foreach(MMap_t *map, MListForeachFunc func, mpointer_t udata);
+void mmap_foreach(MMap_t *map, MForeachFunc func, mpointer_t udata);
 
 #endif

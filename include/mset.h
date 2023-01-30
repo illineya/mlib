@@ -14,7 +14,7 @@ struct MSet {
 MSet_t *mset_init(MHashFunc hash, MEqualFunc equal);
 void mset_deinit(MSet_t *set);
 void mset_add(MSet_t *set, mpointer_t data);
-void mset_foreach(MSet_t *set, MListForeachFunc func, mpointer_t data);
+void mset_foreach(MSet_t *set, MForeachFunc func, mpointer_t data);
 void mset_remove(MSet_t *set, mpointer_t data);
 muint32_t mset_length(MSet_t *set);
 

@@ -9,8 +9,7 @@
 typedef struct MStack MStack_t;
 
 struct MStack {
-    MList_t *head;
-    MList_t *tail;
+    MList_t *list;
     muint32_t count;
 };
 
@@ -35,7 +34,7 @@ void mstack_push(MStack_t *stack, mpointer_t data);
  * @param stack MStack_t *
  * @return mpointer_r
  */
-mpointer_t mstack_pool(MStack_t *stack);
+mpointer_t mstack_pop(MStack_t *stack);
 
 /**
  * Очищает всю память занимаемую очередью

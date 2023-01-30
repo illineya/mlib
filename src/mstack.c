@@ -5,23 +5,25 @@ MStack_t *mstack_init() {
 }
 
 void mstack_push(MStack_t *stack, mpointer_t data) {
-    MList_t *current = mlist_append(stack->head, data);
-    if(!stack->head)
-        stack->head = current;
-    stack->tail = current;
+    stack->list = mlist_append(stack->list, data);
     stack->count++;
 }
 
-mpointer_t mstack_pool(MStack_t *stack) {
-    mpointer_t item = stack->tail->data;
-    stack->tail = mlist_remove(stack->tail, stack->tail->data);
-    stack->count--;
-    return item;
+mpointer_t mstack_pop(MStack_t *stack) {
+    if(stack && stack->list) {
+        stack->list = mlist_last(stack->list);
+        mpointer_t item = stack->list->data;
+        stack->list = mlist_remove(stack->list, item);
+        stack->count--;
+
+        return item;
+    }
+    return NULL;
 }
 
 void mstack_deinit(MStack_t *stack) {
     if(stack) {
-        mlist_remove_all(stack->head);
+        mlist_remove_all(stack->list);
         free(stack);
     }
 }

@@ -1,9 +1,5 @@
 #include <mlib.h>
-
-typedef struct {
-    mpointer_t key;
-    mpointer_t value;
-} MPair_t;
+#include <stdlib.h>
 
 MMap_t *mmap_init(MHashFunc hash, MEqualFunc equal) {
     MMap_t *map = (MMap_t *) calloc(1, sizeof(MMap_t));
@@ -29,7 +25,7 @@ static muint8_t mmap_hash(MMap_t *map, mpointer_t key) {
 
 static MPair_t *mmap_find(MMap_t *map, mpointer_t key) {
     muint8_t index = mmap_hash(map, key);
-    MList_t *list = map->bucket[index];
+    MList_t *list = mlist_first(map->bucket[index]);
 
     while(list) {
         MPair_t *pair = (MPair_t *) list->data;
@@ -55,12 +51,15 @@ void mmap_add(MMap_t *map, mpointer_t key, mpointer_t value) {
         pair->value = value;
         map->bucket[index] = mlist_append(map->bucket[index], (mpointer_t) pair);
         map->length++;
+
+        M_LOG_DEBUG("MAP ADD %i %s %p", index, pair->key, pair->value);
     }
 }
 
 mpointer_t mmap_get(MMap_t *map, mpointer_t key) {
     MPair_t *pair = mmap_find(map, key);
     if(pair) {
+        M_LOG_DEBUG("MAP GET %s %p", pair->key, pair->value);
         return pair->value;
     }
 
@@ -77,7 +76,9 @@ void mmap_remove(MMap_t *map, mpointer_t key) {
     MPair_t *pair = mmap_find(map, key);
     if(pair) {
         map->bucket[index] = mlist_remove(map->bucket[index], (mconstpointer_t) pair);
+        M_LOG_DEBUG("MAP REMOVE %i %s %p", index, pair->key, pair->value);
         free(pair);
+        map->length--;
     }
 
 }
@@ -90,7 +91,7 @@ muint32_t mmap_length(MMap_t *map) {
     return 0;
 }
 
-void mmap_foreach(MMap_t *map, MListForeachFunc func, mpointer_t udata) {
+void mmap_foreach(MMap_t *map, MForeachFunc func, mpointer_t udata) {
     if(map) {
         for(int i=0; i<CAPACITY; i++) {
             MList_t *list = map->bucket[i];

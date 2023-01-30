@@ -21,7 +21,7 @@ void mset_add(MSet_t *set, mpointer_t data) {
     }
 }
 
-void mset_foreach(MSet_t *set, MListForeachFunc func, mpointer_t data) {
+void mset_foreach(MSet_t *set, MForeachFunc func, mpointer_t data) {
     if(set) {
         mmap_foreach(set->map, func, data);
     }
@@ -34,5 +34,5 @@ void mset_remove(MSet_t *set, mpointer_t data) {
 }
 
 muint32_t mset_length(MSet_t *set) {
-    return set->map->length;
+    return mmap_length(set->map);
 }

@@ -5,12 +5,14 @@
 
 #include <mtypes.h>
 #include <mstring.h>
-#include <mpool.h>
 #include <mlog.h>
+#include <mpool.h>
 #include <mlist.h>
 #include <mqueue.h>
 #include <mstack.h>
 #include <mmap.h>
 #include <mset.h>
+
+#include <mtest.h>
 
 #endif

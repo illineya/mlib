@@ -9,8 +9,7 @@
 typedef struct MQueue MQueue_t;
 
 struct MQueue {
-    MList_t *head;
-    MList_t *tail;
+    MList_t *list;
     muint32_t count;
 };
 
@@ -35,7 +34,7 @@ void mqueue_push(MQueue_t *queue, mpointer_t data);
  * @param queue MQueue_t *
  * @return mpointer_r
  */
-mpointer_t mqueue_pool(MQueue_t *queue);
+mpointer_t mqueue_pop(MQueue_t *queue);
 
 /**
  * Очищает всю память занимаемую очередью

@@ -1,5 +1,5 @@
 #include <mlib.h>
-#include <stdio.h>
+#include <stdlib.h>
 
 MList_t *mlist_first(MList_t *list) {
     if(list) {
@@ -63,7 +63,7 @@ static MList_t *mlist_insert_before(MList_t *list, mpointer_t data) {
     return list;
 }
 
-MList_t *mlist_insert_sorted(MList_t *list, mpointer_t data, MListSortFunc func) {
+MList_t *mlist_insert_sorted(MList_t *list, mpointer_t data, MSortFunc func) {
     list = mlist_first(list);
 
     while(list->next) {
@@ -78,25 +78,26 @@ MList_t *mlist_insert_sorted(MList_t *list, mpointer_t data, MListSortFunc func)
 }
 
 MList_t *mlist_remove(MList_t *list, mconstpointer_t data) {
-    list = mlist_first(list);
+    MList_t *first = mlist_first(list);
 
-    while(list && list->data != data)
-        list = list->next;
+    while(first && first->data != data)
+        first = first->next;
 
-    if(list) {
-        MList_t *next = list->next;
-        MList_t *prev = list->prev;
-        free(list->data);
-        free(list);
+    if(first) {
+        MList_t *next = first->next;
+        MList_t *prev = first->prev;
+        free(first);
 
         if(next) next->prev = prev;
         if(prev) prev->next = next;
 
         if(prev) return prev;
         if(next) return next;
+
+        return NULL;
     }
 
-    return NULL;
+    return list;
 }
 
 void mlist_remove_all(MList_t *list) {
@@ -105,7 +106,6 @@ void mlist_remove_all(MList_t *list) {
     while(list) {
         MList_t *item = list;
         list = list->next;
-        free(item->data);
         free(item);
     }
 }
@@ -127,7 +127,7 @@ MList_t *mlist_find(MList_t *list, mconstpointer_t data) {
     return list;
 }
 
-void mlist_foreach(MList_t *list, MListForeachFunc func, mpointer_t udata) {
+void mlist_foreach(MList_t *list, MForeachFunc func, mpointer_t udata) {
     list = mlist_first(list);
 
     while(list) {
