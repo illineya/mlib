@@ -31,18 +31,11 @@ static MPair_t *mmap_find(MMap_t *map, mpointer_t key) {
     muint8_t index = mmap_hash(map, key);
     MList_t *list = map->bucket[index];
 
-    if(list) {
-        if(mlist_length(list) > 0) {
-            while(list->next) {
-                MPair_t *pair = (MPair_t *) list->data;
-                if(map->equal(pair->key, key)) {
-                    return pair;
-                }
-                list = list->next;
-            }
-        }
-
-        return (MPair_t *) list->data;
+    while(list) {
+        MPair_t *pair = (MPair_t *) list->data;
+        if(map->equal(pair->key, key))
+            return pair;
+        list = list->next;
     }
 
     return NULL;
