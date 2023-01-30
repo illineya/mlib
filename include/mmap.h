@@ -82,4 +82,12 @@ void mmap_remove(MMap_t *map, mpointer_t key);
  */
 muint32_t mmap_length(MMap_t *map);
 
+/**
+ * Вызывает функцию для каждого элемента map
+ *
+ * @param map MMap_t *
+ * @param func MMapForeach
+ */
+void mmap_foreach(MMap_t *map, MListForeachFunc func, mpointer_t udata);
+
 #endif

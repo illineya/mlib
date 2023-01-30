@@ -89,3 +89,11 @@ muint32_t mmap_length(MMap_t *map) {
 
     return 0;
 }
+
+void mmap_foreach(MMap_t *map, MListForeachFunc func, mpointer_t udata) {
+    if(map) {
+        for(int i=0; i<CAPACITY; i++) {
+            mlist_foreach(map->bucket[i], func, udata);
+        }
+    }
+}

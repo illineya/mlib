@@ -127,6 +127,7 @@ MList_t *mlist_find(MList_t *list, mconstpointer_t data) {
 
 void mlist_foreach(MList_t *list, MListForeachFunc func, mpointer_t udata) {
     list = mlist_first(list);
+
     while(list) {
         if(!func(list->data, udata))
             break;
