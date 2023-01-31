@@ -5,7 +5,10 @@
 #error "Only <mlib.h> can be included directly."
 #endif
 
+#ifndef NULL
 #define NULL (void *) 0
+#endif
+
 #define MPOINTER(p) (mpointer_t) p
 #define MPOINTER_TO_INT8(p) (mint8_t) (*p)
 #define MPOINTER_TO_INT16(p) (mint16_t) (*p)

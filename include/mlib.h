@@ -3,6 +3,10 @@
 
 #define __MLIB_H_INSIDE__
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <mtypes.h>
 #include <mstring.h>
 #include <mlog.h>
@@ -12,7 +16,10 @@
 #include <mstack.h>
 #include <mmap.h>
 #include <mset.h>
-
 #include <mtest.h>
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
