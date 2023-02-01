@@ -7,5 +7,5 @@ pkgincludedir=${includedir}/mlib
 Name: mlib
 Description: Mlib
 Version: 1.0
-Libs: -L${libdir} -lmlib
+Libs: -L${libdir} -lmlib -pthread
 Cflags: -I${pkgincludedir}

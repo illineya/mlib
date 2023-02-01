@@ -17,6 +17,8 @@ extern "C" {
 #include <mmap.h>
 #include <mset.h>
 #include <mtest.h>
+#include <mthread.h>
+#include <mroutine.h>
 
 #ifdef __cplusplus
 }
