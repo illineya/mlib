@@ -20,9 +20,7 @@ mboolean mthread_test_detached(mpointer_t udata) {
     muchar_t str[] = "1";
 
     MThread_t *thread = mthread_create(mthread_test_run, (mpointer_t) str);
-    mthread_detach(thread, TRUE);
-
-    return thread->detached;
+    return mthread_detach(thread);
 }
 
 int main() {

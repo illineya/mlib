@@ -24,3 +24,5 @@ tests/mpool
 tests/mqueue
 tests/mset
 tests/mstack
+libmlib.dylib
+tests/mthread

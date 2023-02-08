@@ -7,7 +7,10 @@ static mboolean test_func(mpointer_t udata) {
 }
 
 MTest_t *mtest_init(void) {
-    return calloc(1, sizeof(MTest_t));
+    MTest_t *test = calloc(1, sizeof(MTest_t));
+    test->list = NULL;
+
+    return test;
 }
 
 void mtest_deinit(MTest_t *test) {

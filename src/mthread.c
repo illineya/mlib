@@ -2,16 +2,34 @@
 
 MThread_t *mthread_create(MThreadFunc func, mpointer_t udata) {
     MThread_t *thread = malloc(sizeof(MThread_t));
-    thread->id = pthread_create(&thread->thread, NULL, (void *) func, udata);
-    thread->detached = FALSE;
-    return thread;
+    if(thread) {
+        thread->id = pthread_create(&thread->thread, NULL, (void *) func, udata);
+        if(!thread->id) {
+            thread->detached = FALSE;
+            return thread;
+        }
+        free(thread);
+    }
+    return NULL;
 }
 
-mboolean mthread_detach(MThread_t *thread, mboolean detach) {
-    thread->detached = detach;
-    return pthread_detach(thread->thread) > 0;
+mboolean mthread_detach(MThread_t *thread) {
+    if(thread) {
+        thread->detached = TRUE;
+        return pthread_detach(thread->thread) == 0;
+    }
+    return FALSE;
 }
 
 mboolean mthread_join(MThread_t *thread) {
-    return pthread_join(thread->thread, NULL) > 0;
+    if(thread) {
+        return pthread_join(thread->thread, NULL) == 0;
+    }
+    return FALSE;
+}
+
+void mthread_deinit(MThread_t *thread) {
+    if(mthread_join(thread)) {
+        free(thread);
+    }
 }

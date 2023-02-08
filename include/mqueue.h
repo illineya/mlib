@@ -37,6 +37,14 @@ void mqueue_push(MQueue_t *queue, mpointer_t data);
 mpointer_t mqueue_pop(MQueue_t *queue);
 
 /**
+ * Получает кол-во элементов в очереди
+ *
+ * @param queue MQueue_t *
+ * @return muint32_t
+ */
+muint32_t mqueue_length(MQueue_t *queue);
+
+/**
  * Очищает всю память занимаемую очередью
  *
  * @param queue MQueue_t *

@@ -7,6 +7,7 @@
 #include <pthread.h>
 
 typedef void (* MThreadFunc)(mpointer_t udata);
+typedef void (* MThreadDestroyFunc)(mpointer_t udata);
 
 typedef struct MThread MThread_t;
 struct MThread {
@@ -15,8 +16,36 @@ struct MThread {
     mboolean detached;
 };
 
+/**
+ * Создаёт новый поток
+ *
+ * @param func MThreadFunc
+ * @param udata mpointer_t
+ * @return MThread_t *
+ */
 MThread_t *mthread_create(MThreadFunc func, mpointer_t udata);
-mboolean mthread_detach(MThread_t *thread, mboolean detach);
+
+/**
+ * Отсоединяет поток
+ *
+ * @param thread MThread_t *
+ * @return mboolean
+ */
+mboolean mthread_detach(MThread_t *thread);
+
+/**
+ * Ожидает завершения потока
+ *
+ * @param thread MThread_t *
+ * @return mboolean
+ */
 mboolean mthread_join(MThread_t *thread);
+
+/**
+ * Освобождает память выделенную для потока
+ *
+ * @param thread MThread_t *
+ */
+void mthread_deinit(MThread_t *thread);
 
 #endif

@@ -8,8 +8,10 @@ MQueue_t *mqueue_init(void) {
 }
 
 void mqueue_push(MQueue_t *queue, mpointer_t data) {
-    queue->list = mlist_append(queue->list, data);
-    queue->count++;
+    if(queue) {
+        queue->list = mlist_append(queue->list, data);
+        queue->count++;
+    }
 }
 
 mpointer_t mqueue_pop(MQueue_t *queue) {
@@ -22,6 +24,12 @@ mpointer_t mqueue_pop(MQueue_t *queue) {
         return item;
     }
     return NULL;
+}
+
+muint32_t mqueue_length(MQueue_t *queue) {
+    if(queue)
+        return mlist_length(queue->list);
+    return 0;
 }
 
 void mqueue_deinit(MQueue_t *queue) {
