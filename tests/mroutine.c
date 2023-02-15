@@ -1,7 +1,10 @@
 #include <mlib.h>
 #include <stdio.h>
 
+static muint32_t count = 0;
+
 void mroutine_test_attach(mpointer_t data) {
+    count++;
     printf("VAR: %s %lu\n", data, pthread_self());
 }
 
@@ -14,11 +17,6 @@ mboolean mroutine_test_create(mpointer_t udata) {
 int main() {
     MTest_t *test = mtest_init();
     MRoutine_t *routine = mroutine_init();
-
-    mtest_append(test, "mroutine_test_create", mroutine_test_create);
-    mtest_append(test, "mroutine_test_create", mroutine_test_create);
-    mtest_append(test, "mroutine_test_create", mroutine_test_create);
-    mtest_append(test, "mroutine_test_create", mroutine_test_create);
 
     mtest_append(test, "mroutine_test_create", mroutine_test_create);
     mtest_append(test, "mroutine_test_create", mroutine_test_create);

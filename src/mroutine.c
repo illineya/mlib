@@ -4,20 +4,20 @@ void mroutine_func(mpointer_t udata) {
     MRoutineInfo_t *info = (MRoutineInfo_t *) udata;
 
     while(info->running) {
-        pthread_mutex_lock(&info->routine->mutex);
-
         MRoutineData_t *data = (MRoutineData_t *) mqueue_pop(info->routine->queue);
         if(data)
             data->func(data->data);
+
+        if(!mqueue_length(info->routine->queue))
+            pthread_mutex_lock(&info->routine->mutex);
     }
 }
 
 MRoutine_t *mroutine_init() {
     MRoutine_t *routine = calloc(1, sizeof(MRoutine_t));
-    routine->cores = 2;
+    routine->cores = sysconf(_SC_NPROCESSORS_ONLN);
     routine->queue = mqueue_init();
     pthread_mutex_init(&routine->mutex, NULL);
-    pthread_mutex_lock(&routine->mutex);
 
     for(int i=0; i<routine->cores; i++) {
         MRoutineInfo_t *info = malloc(sizeof(MRoutineInfo_t));
