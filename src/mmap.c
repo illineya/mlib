@@ -15,8 +15,9 @@ MMap_t *mmap_init(muint16_t capacity, MHashFunc hash, MEqualFunc equal) {
 void mmap_deinit(MMap_t *map) {
     if(map) {
         for(int i=0; i<map->capacity; i++) {
-            mlist_remove_all(*(map->bucket + i));
+            mlist_remove_all_full(*(map->bucket + i));
         }
+        free(map->bucket);
         free(map);
     }
 }

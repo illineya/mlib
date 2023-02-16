@@ -21,6 +21,7 @@ void mtest_deinit(MTest_t *test) {
         free(item->data);
         free(item);
     }
+    free(test);
 }
 
 void mtest_append(MTest_t *test, mchar_t *name, MTestFunc func) {

@@ -4,12 +4,17 @@ void mroutine_func(mpointer_t udata) {
     MRoutineInfo_t *info = (MRoutineInfo_t *) udata;
 
     while(info->running) {
-        MRoutineData_t *data = (MRoutineData_t *) mqueue_pop(info->routine->queue);
-        if(data)
-            data->func(data->data);
+        pthread_mutex_lock(&info->mutex);
 
-        if(!mqueue_length(info->routine->queue))
-            pthread_mutex_lock(&info->routine->mutex);
+        pthread_mutex_lock(&info->routine->mutex);
+        MRoutineData_t *data = (MRoutineData_t *) mqueue_pop(info->routine->queue);
+        if(data) {
+            data->func(data->data);
+            if(data->destroy)
+                data->destroy(data->data);
+            free(data);
+        }
+        pthread_mutex_unlock(&info->routine->mutex);
     }
 }
 
@@ -30,6 +35,12 @@ MRoutine_t *mroutine_init() {
     return routine;
 }
 
+static void mroutine_unlock(MRoutine_t *routine) {
+    for(int i=0; i<routine->cores; i++) {
+        pthread_mutex_unlock(&routine->threads[i]->mutex);
+    }
+}
+
 void mroutine_attach(MRoutine_t *routine, MThreadFunc func, mpointer_t udata, MThreadDestroyFunc destroy) {
     MRoutineData_t *data = malloc(sizeof(MRoutineData_t));
     data->func = func;
@@ -37,7 +48,7 @@ void mroutine_attach(MRoutine_t *routine, MThreadFunc func, mpointer_t udata, MT
     data->data = udata;
 
     mqueue_push(routine->queue, (mpointer_t) data);
-    pthread_mutex_unlock(&routine->mutex);
+    mroutine_unlock(routine);
 }
 
 void mroutine_deinit(MRoutine_t *routine) {
@@ -51,10 +62,16 @@ void mroutine_deinit(MRoutine_t *routine) {
             free(data);
         }
 
-        for(int i=0; i<routine->cores; i++)
+        for(int i=0; i<routine->cores; i++) {
             routine->threads[i]->running = FALSE;
+            pthread_mutex_unlock(&routine->threads[i]->mutex);
+            pthread_mutex_destroy(&routine->threads[i]->mutex);
+            mthread_deinit(routine->threads[i]->thread);
+            free(routine->threads[i]);
+        }
 
         mqueue_deinit(routine->queue);
         pthread_mutex_destroy(&routine->mutex);
+        free(routine);
     }
 }

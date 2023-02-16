@@ -33,6 +33,7 @@ int main() {
     mtest_append(test, "mtest_queue_push_multiple", mtest_queue_push_multiple);
     mint32_t failed = mtest_run(test, (mpointer_t) &queue);
     mqueue_deinit(queue);
+    mtest_deinit(test);
 
     return failed;
 }

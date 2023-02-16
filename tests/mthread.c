@@ -8,19 +8,24 @@ static void mthread_test_run(mpointer_t udata) {
 mboolean mthread_test_create(mpointer_t udata) {
     muchar_t str[] = "1";
 
+    mboolean status = FALSE;
     MThread_t *thread = mthread_create(mthread_test_run, (mpointer_t) str);
     mthread_join(thread);
     if(str[0] == '2')
-        return TRUE;
+        status = TRUE;
+    mthread_deinit(thread);
 
-    return FALSE;
+    return status;
 }
 
 mboolean mthread_test_detached(mpointer_t udata) {
     muchar_t str[] = "1";
 
     MThread_t *thread = mthread_create(mthread_test_run, (mpointer_t) str);
-    return mthread_detach(thread);
+    mboolean status = mthread_detach(thread);
+    mthread_deinit(thread);
+
+    return status;
 }
 
 int main() {

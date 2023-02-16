@@ -73,6 +73,14 @@ MList_t *mlist_remove(MList_t *list, mconstpointer_t data);
 void mlist_remove_all(MList_t *list);
 
 /**
+ * Удаляет все элементы из списка с удалением
+ * значения при помощи free
+ *
+ * @param list MList_t *
+ */
+void mlist_remove_all_full(MList_t *list);
+
+/**
  * Возвращает кол-во элементов в списке
  *
  * @param list MList_t *

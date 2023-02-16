@@ -18,18 +18,20 @@ mboolean mthread_detach(MThread_t *thread) {
         thread->detached = TRUE;
         return pthread_detach(thread->thread) == 0;
     }
-    return FALSE;
+    return TRUE;
 }
 
 mboolean mthread_join(MThread_t *thread) {
     if(thread) {
         return pthread_join(thread->thread, NULL) == 0;
     }
-    return FALSE;
+    return TRUE;
 }
 
 void mthread_deinit(MThread_t *thread) {
-    if(mthread_join(thread)) {
+    if(thread) {
+        mthread_join(thread);
+        pthread_cancel(thread->thread);
         free(thread);
     }
 }

@@ -62,6 +62,7 @@ int main() {
     mtest_append(test, "mtest_map_length", mtest_map_length);
     mint32_t failed = mtest_run(test, (mpointer_t) map);
     mmap_deinit(map);
+    mtest_deinit(test);
 
     return failed;
 }

@@ -37,6 +37,7 @@ int main() {
     mtest_append(test, "mtest_set_add_multiple", mtest_set_add_multiple);
     mint32_t failed = mtest_run(test, (mpointer_t) set);
     mset_deinit(set);
+    mtest_deinit(test);
 
     return failed;
 }

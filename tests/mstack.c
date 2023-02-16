@@ -33,6 +33,7 @@ int main() {
     mtest_append(test, "mtest_stack_push_multiple", mtest_stack_push_multiple);
     mint32_t failed = mtest_run(test, (mpointer_t) &stack);
     mstack_deinit(stack);
+    mtest_deinit(test);
 
     return failed;
 }

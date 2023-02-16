@@ -110,6 +110,17 @@ void mlist_remove_all(MList_t *list) {
     }
 }
 
+void mlist_remove_all_full(MList_t *list) {
+    list = mlist_first(list);
+
+    while(list) {
+        MList_t *item = list;
+        list = list->next;
+        free(item->data);
+        free(item);
+    }
+}
+
 muint32_t mlist_length(MList_t *list) {
     MList_t *first = mlist_first(list);
     muint32_t len = 0;

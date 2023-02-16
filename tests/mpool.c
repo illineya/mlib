@@ -27,6 +27,7 @@ int main() {
     mtest_append(test, "mtest_pool_free", mtest_pool_free);
     mint32_t failed = mtest_run(test, (mpointer_t) &pool);
     mpool_deinit(pool);
+    mtest_deinit(test);
 
     return failed;
 }
