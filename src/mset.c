@@ -2,7 +2,7 @@
 
 MSet_t *mset_init(MHashFunc hash, MEqualFunc equal) {
     MSet_t *set = calloc(1, sizeof(MSet_t));
-    set->map = mmap_init(hash, equal);
+    set->map = mmap_init(16, hash, equal);
     return set;
 }
 

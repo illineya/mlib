@@ -4,14 +4,14 @@
 #if !defined (__MLIB_H_INSIDE__)
 #error "Only <mlib.h> can be included directly."
 #endif
-#define CAPACITY 16
 
 typedef struct MMap MMap_t;
 struct MMap {
     muint32_t length;
     MHashFunc hash;
     MEqualFunc equal;
-    MList_t *bucket[16];
+    MList_t **bucket;
+    muint16_t capacity;
 };
 
 /**
@@ -25,7 +25,7 @@ struct MMap {
  * @param equal MEqual_t
  * @return MMap_t *
  */
-MMap_t *mmap_init(MHashFunc hash, MEqualFunc equal);
+MMap_t *mmap_init(muint16_t capacity, MHashFunc hash, MEqualFunc equal);
 
 /**
  * Очищает всю выделенную память для MMap_t
