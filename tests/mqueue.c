@@ -7,10 +7,10 @@ mboolean mtest_queue_push_one(mpointer_t udata) {
     mqueue_push(*queue, "test");
     mpointer_t data = mqueue_pop(*queue);
     if(!strcmp(data, "test")) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_queue_push_multiple(mpointer_t udata) {
@@ -20,10 +20,10 @@ mboolean mtest_queue_push_multiple(mpointer_t udata) {
     mqueue_push(*queue, "lost");
     mpointer_t data = mqueue_pop(*queue);
     if(!strcmp(data, "test")) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 int main() {

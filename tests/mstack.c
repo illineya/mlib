@@ -7,10 +7,10 @@ mboolean mtest_stack_push_one(mpointer_t udata) {
     mstack_push(*stack, "test");
     mpointer_t data = mstack_pop(*stack);
     if(!strcmp(data, "test")) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_stack_push_multiple(mpointer_t udata) {
@@ -20,10 +20,10 @@ mboolean mtest_stack_push_multiple(mpointer_t udata) {
     mstack_push(*stack, "lost");
     mpointer_t data = mstack_pop(*stack);
     if(!strcmp(data, "lost")) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 int main() {

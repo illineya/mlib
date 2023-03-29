@@ -4,9 +4,9 @@ mboolean mtest_pool_alloc(mpointer_t udata) {
     MPool_t **pool = (MPool_t **) udata;
     MList_t *list = (MList_t *) mpool_alloc(*pool);
     if(list && sizeof(*list) == sizeof(MList_t)) {
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_pool_free(mpointer_t udata) {
@@ -14,10 +14,10 @@ mboolean mtest_pool_free(mpointer_t udata) {
     MList_t *list = (MList_t *) mpool_alloc(*pool);
     mpool_free(*pool, (mpointer_t) list);
     if(mpool_allocated(*pool) == sizeof(MList_t)) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 int main() {

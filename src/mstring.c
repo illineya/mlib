@@ -12,8 +12,8 @@ muint32_t mstr_hash(mconstpointer_t str) {
 }
 
 mboolean mstr_equal(mconstpointer_t a, mconstpointer_t b) {
-    if(!a && !b) return TRUE;
-    if(!a || !b) return FALSE;
+    if(!a && !b) return true;
+    if(!a || !b) return false;
 
     return strcmp(a, b) == 0;
 }

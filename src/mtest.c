@@ -3,7 +3,7 @@
 #include <sys/time.h>
 
 static mboolean test_func(mpointer_t udata) {
-    return TRUE;
+    return true;
 }
 
 MTest_t *mtest_init(void) {

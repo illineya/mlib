@@ -19,6 +19,19 @@ MList_t *mlist_last(MList_t *list) {
     return NULL;
 }
 
+mpointer_t mlist_get(MList_t *list, muint32_t n) {
+    if(list) {
+        list = mlist_first(list);
+        for(int i=0; list; list = list->next, i++) {
+            if(i == n) {
+                return list->data;
+            }
+        }
+    }
+
+    return NULL;
+}
+
 static MList_t *mlist_create(mpointer_t data) {
     MList_t *list = (MList_t *) calloc(1, sizeof(MList_t));
     list->data = data;
@@ -142,7 +155,7 @@ void mlist_foreach(MList_t *list, MForeachFunc func, mpointer_t udata) {
     list = mlist_first(list);
 
     while(list) {
-        if(!func(list->data, udata))
+        if(!func(NULL, list->data, udata))
             break;
         list = list->next;
     }

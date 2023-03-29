@@ -8,11 +8,11 @@ static void mthread_test_run(mpointer_t udata) {
 mboolean mthread_test_create(mpointer_t udata) {
     muchar_t str[] = "1";
 
-    mboolean status = FALSE;
+    mboolean status = false;
     MThread_t *thread = mthread_create(mthread_test_run, (mpointer_t) str);
     mthread_join(thread);
     if(str[0] == '2')
-        status = TRUE;
+        status = true;
     mthread_deinit(thread);
 
     return status;

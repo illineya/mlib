@@ -26,7 +26,7 @@ MRoutine_t *mroutine_init() {
 
     for(int i=0; i<routine->cores; i++) {
         MRoutineInfo_t *info = malloc(sizeof(MRoutineInfo_t));
-        info->running = TRUE;
+        info->running = true;
         info->routine = routine;
         info->thread = mthread_create(mroutine_func, (mpointer_t) info);
         routine->threads[i] = info;
@@ -53,7 +53,7 @@ void mroutine_attach(MRoutine_t *routine, MThreadFunc func, mpointer_t udata, MT
 
 void mroutine_deinit(MRoutine_t *routine) {
     if(routine) {
-        while(TRUE) {
+        while(true) {
             MRoutineData_t *data = (MRoutineData_t *) mqueue_pop(routine->queue);
             if(!data)
                 break;
@@ -63,7 +63,7 @@ void mroutine_deinit(MRoutine_t *routine) {
         }
 
         for(int i=0; i<routine->cores; i++) {
-            routine->threads[i]->running = FALSE;
+            routine->threads[i]->running = false;
             pthread_mutex_unlock(&routine->threads[i]->mutex);
             pthread_mutex_destroy(&routine->threads[i]->mutex);
             mthread_deinit(routine->threads[i]->thread);

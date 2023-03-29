@@ -7,10 +7,10 @@ mboolean mtest_map_add_one(mpointer_t udata) {
     mmap_add(map, "test", "test");
     mpointer_t data = mmap_get(map, "test");
     if(!strcmp(data, "test")) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_map_add_multiple(mpointer_t udata) {
@@ -20,10 +20,10 @@ mboolean mtest_map_add_multiple(mpointer_t udata) {
     mmap_add(map, "lost", "lost");
     mpointer_t data = mmap_get(map, "test");
     if(!strcmp(data, "test")) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_map_remove(mpointer_t udata) {
@@ -31,25 +31,25 @@ mboolean mtest_map_remove(mpointer_t udata) {
     mmap_remove(map, "test");
     mpointer_t data = mmap_get(map, "test");
     if(!data) {
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_map_contains(mpointer_t udata) {
     MMap_t *map = (MMap_t *) udata;
     if(mmap_contains(map, "lost")) {
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 muint32_t mtest_map_length(mpointer_t udata) {
     MMap_t *map = (MMap_t *) udata;
     if(mmap_length(map) == 1) {
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 int main() {

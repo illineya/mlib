@@ -4,18 +4,18 @@ mboolean mtest_set_add(mpointer_t udata) {
     MSet_t *set = (MSet_t *) udata;
     mset_add(set, "test");
     if(mset_length(set) == 1) {
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_set_remove(mpointer_t udata) {
     MSet_t *set = (MSet_t *) udata;
     mset_remove(set, "test");
     if(mset_length(set) == 0) {
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_set_add_multiple(mpointer_t udata) {
@@ -24,9 +24,9 @@ mboolean mtest_set_add_multiple(mpointer_t udata) {
     mset_add(set, "lost");
     mset_add(set, "test");
     if(mset_length(set) == 2) {
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 int main() {

@@ -19,7 +19,7 @@
 #define MPOINTER_TO_UINT32(p) (muint32_t) (*p)
 #define MPOINTER_TO_UINT64(p) (muint64_t) (*p)
 
-enum BOOL {FALSE, TRUE};
+enum BOOL {false, true};
 
 typedef enum BOOL mboolean;
 
@@ -41,7 +41,9 @@ typedef char mint8_t;
 typedef unsigned char muchar_t;
 typedef char mchar_t;
 
-typedef mboolean (* MForeachFunc)(mpointer_t data, mpointer_t udata);
+typedef void (* MFreeFunc)(mpointer_t);
+typedef mboolean (* MForeachFunc)(mpointer_t key, mpointer_t value, mpointer_t udata);
+typedef mboolean (* MMapPredicatFunc)(mpointer_t a, mpointer_t b);
 typedef int (* MSortFunc)(mpointer_t a, mpointer_t b);
 typedef muint32_t (* MHashFunc)(mconstpointer_t key);
 typedef mboolean (* MEqualFunc)(mconstpointer_t key, mconstpointer_t value);

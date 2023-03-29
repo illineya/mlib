@@ -6,9 +6,9 @@ mboolean mtest_list_add(mpointer_t udata) {
 
     *list = mlist_append(*list, "1hello");
     if(mlist_length(*list) == 1)
-        return TRUE;
+        return true;
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_list_first(mpointer_t udata) {
@@ -17,9 +17,9 @@ mboolean mtest_list_first(mpointer_t udata) {
     *list = mlist_append(*list, "2hello");
     *list = mlist_first(*list);
     if(!strcmp((*list)->data, "1hello"))
-        return TRUE;
+        return true;
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_list_last(mpointer_t udata) {
@@ -27,9 +27,9 @@ mboolean mtest_list_last(mpointer_t udata) {
 
     *list = mlist_last(*list);
     if(!strcmp((*list)->data, "2hello"))
-        return TRUE;
+        return true;
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_list_prepend(mpointer_t udata) {
@@ -38,9 +38,9 @@ mboolean mtest_list_prepend(mpointer_t udata) {
     *list = mlist_prepend(*list, "3hello");
     *list = mlist_first(*list);
     if(!strcmp((*list)->data, "3hello"))
-        return TRUE;
+        return true;
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_list_insert_sorted(mpointer_t udata) {
@@ -49,9 +49,9 @@ mboolean mtest_list_insert_sorted(mpointer_t udata) {
     *list = mlist_insert_sorted(*list, "0hello", (MSortFunc) strcmp);
     *list = mlist_first(*list);
     if(!strcmp((*list)->data, "0hello"))
-        return TRUE;
+        return true;
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_list_remove(mpointer_t udata) {
@@ -59,9 +59,9 @@ mboolean mtest_list_remove(mpointer_t udata) {
 
     *list = mlist_remove(*list, "3hello");
     if(mlist_length(*list) == 3)
-        return TRUE;
+        return true;
 
-    return FALSE;
+    return false;
 }
 
 mboolean mtest_list_remove_and_append(mpointer_t udata) {
@@ -72,17 +72,17 @@ mboolean mtest_list_remove_and_append(mpointer_t udata) {
     list = mlist_append(list, "test");
     mlist_remove(list, "test");
 
-    return TRUE;
+    return true;
 }
 
 mboolean mtest_list_find(mpointer_t udata) {
     MList_t **list = (MList_t **) udata;
 
     if(mlist_find(*list, "2hello")) {
-        return TRUE;
+        return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 int main() {

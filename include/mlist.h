@@ -29,6 +29,15 @@ MList_t *mlist_first(MList_t *list);
 MList_t *mlist_last(MList_t *list);
 
 /**
+ * Получает элемент по индексу
+ *
+ * @param list MList_t *
+ * @param n muint32_t
+ * @return mpointer_t
+ */
+mpointer_t mlist_get(MList_t *list, muint32_t n);
+
+/**
  * Кладёт новый элемент в конец списка
  *
  * @param list MLis_t *

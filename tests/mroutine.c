@@ -11,7 +11,7 @@ void mroutine_test_attach(mpointer_t data) {
 mboolean mroutine_test_create(mpointer_t udata) {
     mroutine_attach((MRoutine_t *) udata, mroutine_test_attach, "Hello World!", NULL);
 
-    return TRUE;
+    return true;
 }
 
 int main() {
