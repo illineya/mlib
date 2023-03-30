@@ -142,6 +142,8 @@ MList_t *mmap_get_values(MMap_t *map) {
 
     for(int i=0; i<map->capacity; i++) {
         MList_t *item = *(map->bucket + i);
+        item = mlist_first(item);
+
         while(item) {
             MPair_t *pair = (MPair_t *) item->data;
             list = mlist_append(list, pair->value);
@@ -174,10 +176,11 @@ void mmap_foreach_nth(MMap_t *map, MForeachFunc func, mint32_t start, mint32_t n
     muint32_t end = start + num;
 
     if(start < length) {
-        for(int i=start; i<end <= length; i++) {
+        for(int i=start; i<(end <= length ? end : length); i++) {
             mpointer_t data = mlist_get(list, i);
-            if(!func((mpointer_t) &i, data, udata))
-                break;
+            if(data) {
+                func((mpointer_t) &i, data, udata);
+            }
         }
     }
 
