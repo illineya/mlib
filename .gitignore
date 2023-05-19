@@ -12,6 +12,7 @@ tests/CMakeFiles/
 tests/CTestTestfile.cmake
 tests/Makefile
 tests/cmake_install.cmake
+tests/mroutine
 .cmake/
 build.ninja
 install_manifest.txt
