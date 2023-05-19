@@ -26,3 +26,4 @@ tests/mset
 tests/mstack
 libmlib.dylib
 tests/mthread
+tests/mroutine

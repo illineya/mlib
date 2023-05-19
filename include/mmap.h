@@ -124,6 +124,14 @@ muint32_t mmap_length(MMap_t *map);
 MList_t *mmap_get_values(MMap_t *map);
 
 /**
+ * Получает ключи MMap_t в виде списка
+ *
+ * @param map MMap_t *
+ * @return MList_t *
+ */
+MList_t *mmap_get_keys(MMap_t *map);
+
+/**
  * Вызывает функцию для каждого элемента map
  *
  * @param map MMap_t *

@@ -154,6 +154,23 @@ MList_t *mmap_get_values(MMap_t *map) {
     return list;
 }
 
+MList_t *mmap_get_keys(MMap_t *map) {
+    MList_t *list = NULL;
+
+    for(int i=0; i<map->capacity; i++) {
+        MList_t *item = *(map->bucket + i);
+        item = mlist_first(item);
+
+        while(item) {
+            MPair_t *pair = (MPair_t *) item->data;
+            list = mlist_append(list, pair->key);
+            item = item->next;
+        }
+    }
+
+    return list;
+}
+
 void mmap_foreach(MMap_t *map, MForeachFunc func, mpointer_t udata) {
     if(map) {
         for(int i=0; i<map->capacity; i++) {
