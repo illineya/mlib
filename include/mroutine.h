@@ -24,7 +24,7 @@ struct MRoutineInfo {
 };
 
 struct MRoutine {
-    MRoutineInfo_t *threads[5];
+    MRoutineInfo_t **threads;
     muint64_t cores;
     pthread_mutex_t mutex;
     MQueue_t *queue;

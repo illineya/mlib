@@ -21,13 +21,15 @@ void mroutine_func(mpointer_t udata) {
 MRoutine_t *mroutine_init() {
     MRoutine_t *routine = calloc(1, sizeof(MRoutine_t));
     routine->cores = sysconf(_SC_NPROCESSORS_ONLN);
+    routine->threads = calloc(routine->cores, sizeof(MRoutineInfo_t));
     routine->queue = mqueue_init();
     pthread_mutex_init(&routine->mutex, NULL);
 
     for(int i=0; i<routine->cores; i++) {
-        MRoutineInfo_t *info = malloc(sizeof(MRoutineInfo_t));
+        MRoutineInfo_t *info = calloc(1, sizeof(MRoutineInfo_t));
         info->running = true;
         info->routine = routine;
+        pthread_mutex_init(&info->mutex, NULL);
         info->thread = mthread_create(mroutine_func, (mpointer_t) info);
         routine->threads[i] = info;
     }
