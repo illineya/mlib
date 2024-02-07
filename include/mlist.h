@@ -90,6 +90,14 @@ void mlist_remove_all(MList_t *list);
 void mlist_remove_all_full(MList_t *list);
 
 /**
+ * Удаляет все элементы из списка с удалением
+ * значения при помощи функции обратного вызова
+ *
+ * @param list MList_t *
+ */
+void mlist_remove_all_full2(MList_t *list, MFreeFunc func);
+
+/**
  * Возвращает кол-во элементов в списке
  *
  * @param list MList_t *

@@ -134,6 +134,17 @@ void mlist_remove_all_full(MList_t *list) {
     }
 }
 
+void mlist_remove_all_full2(MList_t *list, MFreeFunc func) {
+    list = mlist_first(list);
+
+    while(list) {
+        MList_t *item = list;
+        list = list->next;
+        func(item->data);
+        free(item);
+    }
+}
+
 muint32_t mlist_length(MList_t *list) {
     MList_t *first = mlist_first(list);
     muint32_t len = 0;
