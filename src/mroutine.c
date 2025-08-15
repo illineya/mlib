@@ -1,20 +1,21 @@
 #include <mlib.h>
 
-void mroutine_func(mpointer_t udata) {
+static void mroutine_func(mpointer_t udata) {
     MRoutineInfo_t *info = (MRoutineInfo_t *) udata;
 
     while(info->running) {
-        pthread_mutex_lock(&info->mutex);
-
         pthread_mutex_lock(&info->routine->mutex);
         MRoutineData_t *data = (MRoutineData_t *) mqueue_pop(info->routine->queue);
+        pthread_mutex_unlock(&info->routine->mutex);
+
         if(data) {
             data->func(data->data);
             if(data->destroy)
                 data->destroy(data->data);
             free(data);
+	        continue;
         }
-        pthread_mutex_unlock(&info->routine->mutex);
+        usleep(10);
     }
 }
 
@@ -28,19 +29,17 @@ MRoutine_t *mroutine_init() {
     for(int i=0; i<routine->cores; i++) {
         MRoutineInfo_t *info = calloc(1, sizeof(MRoutineInfo_t));
         info->running = true;
+        info->waiting = true;
         info->routine = routine;
-        pthread_mutex_init(&info->mutex, NULL);
         info->thread = mthread_create(mroutine_func, (mpointer_t) info);
         routine->threads[i] = info;
+
+        char name[10];
+        snprintf(name, 10, "mroutine%i", i);
+        routine->sem = sem_open(name, 0);
     }
 
     return routine;
-}
-
-static void mroutine_unlock(MRoutine_t *routine) {
-    for(int i=0; i<routine->cores; i++) {
-        pthread_mutex_unlock(&routine->threads[i]->mutex);
-    }
 }
 
 void mroutine_attach(MRoutine_t *routine, MThreadFunc func, mpointer_t udata, MThreadDestroyFunc destroy) {
@@ -49,8 +48,9 @@ void mroutine_attach(MRoutine_t *routine, MThreadFunc func, mpointer_t udata, MT
     data->destroy = destroy;
     data->data = udata;
 
+    pthread_mutex_lock(&routine->mutex);
     mqueue_push(routine->queue, (mpointer_t) data);
-    mroutine_unlock(routine);
+    pthread_mutex_unlock(&routine->mutex);
 }
 
 void mroutine_deinit(MRoutine_t *routine) {
@@ -66,14 +66,11 @@ void mroutine_deinit(MRoutine_t *routine) {
 
         for(int i=0; i<routine->cores; i++) {
             routine->threads[i]->running = false;
-            pthread_mutex_unlock(&routine->threads[i]->mutex);
-            pthread_mutex_destroy(&routine->threads[i]->mutex);
             mthread_deinit(routine->threads[i]->thread);
             free(routine->threads[i]);
         }
 
         mqueue_deinit(routine->queue);
-        pthread_mutex_destroy(&routine->mutex);
         free(routine);
     }
 }

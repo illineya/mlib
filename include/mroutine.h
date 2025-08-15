@@ -5,6 +5,7 @@
 #error "Only <mlib.h> can be included directly."
 #endif
 #include <pthread.h>
+#include <semaphore.h>
 
 typedef struct MRoutineData MRoutineData_t;
 typedef struct MRoutine MRoutine_t;
@@ -20,6 +21,7 @@ struct MRoutineInfo {
     MThread_t *thread;
     pthread_mutex_t mutex;
     mboolean running;
+    mboolean waiting;
     MRoutine_t *routine;
 };
 
@@ -28,6 +30,8 @@ struct MRoutine {
     muint64_t cores;
     pthread_mutex_t mutex;
     MQueue_t *queue;
+    sem_t *sem;
+    pthread_cond_t cond;
 };
 
 /**

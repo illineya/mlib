@@ -5,7 +5,7 @@ static muint32_t count = 0;
 
 void mroutine_test_attach(mpointer_t data) {
     count++;
-    printf("VAR: %s %lu\n", data, pthread_self());
+    printf("VAR: %s %i\n", data, count);
 }
 
 mboolean mroutine_test_create(mpointer_t udata) {
