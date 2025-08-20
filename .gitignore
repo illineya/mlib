@@ -28,3 +28,4 @@ tests/mstack
 libmlib.dylib
 tests/mthread
 tests/mroutine
+tests/masync_queue

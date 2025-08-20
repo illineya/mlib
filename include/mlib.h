@@ -13,6 +13,7 @@ extern "C" {
 #include <mpool.h>
 #include <mlist.h>
 #include <mqueue.h>
+#include <masync_queue.h>
 #include <mstack.h>
 #include <mmap.h>
 #include <mset.h>
